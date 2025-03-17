@@ -23,7 +23,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
     return true;
   };
 
-  const clearForm = () => {
+  const reset = () => {
     setTitle('');
     setDescription('');
     setImgUrl('');
@@ -38,11 +38,16 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
     const newMovie: Movie = { title, description, imgUrl, imdbUrl, imdbId };
 
     onAdd(newMovie);
-    clearForm();
+    reset();
   };
 
   return (
-    <form className="NewMovie" key={count} onSubmit={handleSubmit}>
+    <form
+      className="NewMovie"
+      key={count}
+      onSubmit={handleSubmit}
+      onReset={reset}
+    >
       <h2 className="title">Add a movie</h2>
 
       <TextField
