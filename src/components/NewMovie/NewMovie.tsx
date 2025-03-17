@@ -16,11 +16,20 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
   const [imdbId, setImdbId] = useState('');
 
   const isProperlyFilled = () => {
-    if (!title || !validateUrl(imgUrl) || !validateUrl(imdbUrl) || !imdbId) {
+    if (
+      !title.trim() ||
+      !validateUrl(imgUrl.trim()) ||
+      !validateUrl(imdbUrl.trim()) ||
+      !imdbId.trim()
+    ) {
       return false;
     }
 
     return true;
+  };
+
+  const increaseCount = () => {
+    setCount(currentCount => currentCount + 1);
   };
 
   const reset = () => {
@@ -29,13 +38,20 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
     setImgUrl('');
     setImdbUrl('');
     setImdbId('');
+    increaseCount();
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setCount(currentCount => currentCount + 1);
-    const newMovie: Movie = { title, description, imgUrl, imdbUrl, imdbId };
+    increaseCount();
+    const newMovie: Movie = {
+      title: title.trim(),
+      description: description.trim(),
+      imgUrl: imgUrl.trim(),
+      imdbUrl: imdbUrl.trim(),
+      imdbId: imdbId.trim(),
+    };
 
     onAdd(newMovie);
     reset();
